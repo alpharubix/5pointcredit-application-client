@@ -1,49 +1,20 @@
-import {
-  Dropzone,
-  DropzoneContent,
-  DropzoneEmptyState,
-} from '@/components/ui/shadcn-io/dropzone'
+import { Toaster as Sonner } from '@/components/ui/sonner'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import CreateCustomer from './components/pages/CreateCustomer'
+import NotFound from './components/pages/NotFound'
+import Index from './components/pages/Index';
+import UploadDocuments from './components/pages/UploadDocuments'
 
-import { useState } from 'react'
-import { Button } from './components/ui/button'
+const App = () => (
+  <BrowserRouter>
+    <Sonner richColors  position='top-center'/>
+    <Routes>
+      <Route path="/" element={<Index />} />
+      <Route path="/create-customer" element={<CreateCustomer />} />
+      <Route path="/upload-pdf" element={<UploadDocuments />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  </BrowserRouter>
+)
 
-const App = () => {
-  const [files, setFiles] = useState<File[] | undefined>()
-  const handleDrop = (files: File[]) => {
-    console.log(files)
-    setFiles(files)
-  }
-
-  return (
-    <>
-      <div className='flex justify-center items-center h-screen'>
-        <div>
-          <Dropzone
-            accept={{ 'image/*': [] }}
-            maxFiles={10}
-            maxSize={1024 * 1024 * 10}
-            minSize={1024}
-            onDrop={handleDrop}
-            onError={console.error}
-            src={files}
-          >
-            <DropzoneEmptyState />
-            <DropzoneContent />
-            <div>
-              {files && (
-                <Button
-                  className=''
-                  variant='default'
-                  onClick={() => console.log(files)}
-                >
-                  Send File
-                </Button>
-              )}
-            </div>
-          </Dropzone>
-        </div>
-      </div>
-    </>
-  )
-}
 export default App
